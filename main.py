@@ -1,6 +1,6 @@
 import requests
 import json
-import time
+
 
 token = "c1598721c1598721c159872141c12b806acc159c15987219f9a265511f76681353f3a40"
 gid = "rolecon"
@@ -9,12 +9,11 @@ vers = 5.154
 payload = {'access_token': token,
            'group_id': gid,
            'fields': fld,
-           'offset': 0,
+           'offset': 8000,
            'v': vers
           }
 
 members = []
-print(type(members))
 end_of_members_flag = False
 offset = 1000
 while not end_of_members_flag:
@@ -27,11 +26,20 @@ while not end_of_members_flag:
         payload["offset"] = offset
         offset += 1000
         #time.sleep(5)
-    print(len(members))
 
-print(data_dict)
-print(data_dict["response"]["next_from"])
-print(data_dict["response"]["items"][0]["id"])
+print(len(members))
+male = 0
+female = 0
+for member in members:
+    if member["sex"] == 1:
+        female += 1
+    elif member["sex"] == 2:
+        male += 1
+print(female)
+print(male)
+print(male + female)
+
+
 
 # payload['start_from'] = data_dict["response"]["next_from"]
 # r = requests.get("https://api.vk.com/method/groups.getMembers", params=payload).text
